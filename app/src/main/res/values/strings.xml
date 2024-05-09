@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">zxtimer</string>
+    <string name="calendar">calendar</string>
+    <string name="view2">view2</string>
+    <string name="view3">view3</string>
+    <string name="settings">settings</string>
+</resources>
