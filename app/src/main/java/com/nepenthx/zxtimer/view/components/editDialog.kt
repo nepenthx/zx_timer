@@ -1,10 +1,19 @@
 package com.nepenthx.zxtimer.view.components
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
@@ -14,7 +23,9 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -22,23 +33,38 @@ import androidx.compose.ui.window.Dialog
 import com.nepenthx.zxtimer.R
 
 @Composable
-fun EditDialog(onDismissRequest: () -> Unit)
+fun EditDialog(onDismissRequest: () -> Unit,
+callBackValue:(String)->Unit)
 {
-    Dialog(onDismissRequest = { onDismissRequest() }) {
+    val str = remember {
+        mutableStateOf(" ")
+    }
+
+    Dialog(
+        onDismissRequest = { onDismissRequest() }
+    ) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(600.dp)
+                .height(300.dp)
                 .padding(16.dp),
             shape = RoundedCornerShape(16.dp),
+
         ) {
-            TextField()
+            Box(modifier = Modifier.padding(start = 20.dp,end=20.dp),contentAlignment = Alignment.Center)
+            {
+                Column {
+                    TextField{inputValue->  str.value=inputValue }
+                    Spacer(modifier = Modifier.height(6.dp))
+                    ButtonUI(giveBackString = { callBackValue(str.value) })
+                }
+            }
         }
     }
 }
 
 @Composable
-fun TextField() {
+fun TextField(callBackValue: (String) -> Unit) {
     val textValue = remember { mutableStateOf("") }
 
     val primaryColor = colorResource(id = R.color.teal_200)
@@ -55,6 +81,28 @@ fun TextField() {
         value = textValue.value,
         onValueChange = {
             textValue.value = it
+            callBackValue(it)
         },
     )
 }
+
+@Composable
+fun ButtonUI(giveBackString: () -> Unit )
+{
+    Box(modifier = Modifier
+        .padding(start = 30.dp,end=30.dp)
+        .height(80.dp)
+    )
+    {
+            Button(
+                onClick = { giveBackString()},
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = Color.White
+                )
+            ) {
+                Text(text = "确认")
+            }
+
+        }
+    }
