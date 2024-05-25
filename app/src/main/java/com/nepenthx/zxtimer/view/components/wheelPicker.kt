@@ -5,6 +5,9 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -18,10 +21,12 @@ import java.time.LocalTime
 
 @SuppressLint("ResourceAsColor")
 @Composable
-fun WheelPicker()
+fun WheelPicker(onTimeChanged: (time:LocalTime) -> Unit)
 {
+    val hour= remember { mutableIntStateOf(0) }
+    val minute= remember { mutableIntStateOf(0) }
     WheelTimePicker(
-        startTime = LocalTime.now(),
+        startTime = LocalTime.MIN,
         minTime = LocalTime.of(
             0,0
         ),
@@ -39,5 +44,9 @@ fun WheelPicker()
             color = Color(0xFFf1faee).copy(alpha = 0.2f),
             border = BorderStroke(2.dp, Color(0xFFf1faee))
         )
-    ){  snappedTime -> }
+    ){  snappedTime ->
+           hour.intValue=snappedTime.hour
+           minute.intValue=snappedTime.minute
+        onTimeChanged(snappedTime)
+    }
 }

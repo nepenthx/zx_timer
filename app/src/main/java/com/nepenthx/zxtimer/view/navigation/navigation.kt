@@ -47,14 +47,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.nepenthx.zxtimer.R
+import com.nepenthx.zxtimer.ViewModel.UiViewModel
+import com.nepenthx.zxtimer.data.selectTaskData
 import com.nepenthx.zxtimer.view.components.MonthView
+import com.nepenthx.zxtimer.view.components.TaskCardList
 import com.nepenthx.zxtimer.view.components.TaskDialog
 import com.nepenthx.zxtimer.view.components.WheelPicker
 import com.nepenthx.zxtimer.view.ui.MonthViewOfTasks
 import com.nepenthx.zxtimer.view.ui.ddlView
+import java.time.LocalDate
 
 @Composable
 fun BottomNavGraph(
+    viewModel: UiViewModel,
     navController: NavHostController
 ) {
     NavHost(
@@ -62,18 +67,17 @@ fun BottomNavGraph(
         startDestination = BottomBarScreen.Home.route
     ) {
         composable(route = BottomBarScreen.Home.route) {
-            MonthViewOfTasks()
+            MonthViewOfTasks(viewModel)
         }
         composable(route = BottomBarScreen.Report.route) {
-            TaskDialog(onDismissRequest={})
         }
         composable(route = BottomBarScreen.Profile.route) {
-            MonthView()
+
         }
     }
 }
 @Composable
-fun BottomNav() {
+fun BottomNav(viewModel: UiViewModel) {
     val navController = rememberNavController()
 
     Scaffold(
@@ -81,6 +85,7 @@ fun BottomNav() {
     ) {
         Modifier.padding(it)
         BottomNavGraph(
+            viewModel,
             navController = navController
         )
     }
@@ -165,9 +170,3 @@ fun RowScope.AddItem(
     }
 }
 
-
-@Composable
-@Preview
-fun BottomNavPreview() {
-    BottomNav()
-}

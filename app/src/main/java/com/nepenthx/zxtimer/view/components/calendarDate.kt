@@ -15,6 +15,5 @@ fun CalendarDate(calendarMonth: CalendarMonth)
         textAlign = TextAlign.Center,
         text = calendarMonth.yearMonth.toString(),
         fontSize = 18.sp,
-        fontWeight = FontWeight.Bold,
     )
 }

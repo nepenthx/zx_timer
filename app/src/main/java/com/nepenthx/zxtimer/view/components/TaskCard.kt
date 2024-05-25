@@ -12,15 +12,20 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun TaskCard(
+    cycle:Int,//是否完成
+    advanceCompletionBoolean:Int,//是否正计时
     taskName: String,
     color: Color,
     expectedDuration: String,
-    elapsedDuration: String
+    elapsedDuration: String,
+    remarks:String
 ) {
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(7.dp),
+
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -38,14 +43,11 @@ fun TaskCard(
                 // Task name
                 Text(
                     text = taskName,
-                    color = Color(0XFFDC9A9A),
+                    color = Color(0xFF413A3A),
                     style = MaterialTheme.typography.headlineSmall
                 )
-
                 Spacer(modifier = Modifier.height(3.dp))
-
                 // Color indicator
-
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -59,7 +61,7 @@ fun TaskCard(
 
                 // Elapsed duration
                 Text(
-                    text = "已进行: $elapsedDuration",
+                    text = elapsedDuration,
                     style = MaterialTheme.typography.bodySmall
                 )
             }
@@ -70,10 +72,13 @@ fun TaskCard(
 @Composable
 fun TaskCardExample() {
     TaskCard(
+        cycle=1,
+        advanceCompletionBoolean=1,
         taskName = "写作业",
         color = Color.Magenta,
         expectedDuration = "2 hours",
-        elapsedDuration = "1 hour 30 minutes"
+        elapsedDuration = "1 hour 30 minutes",
+        remarks=""
     )
 }
 

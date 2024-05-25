@@ -15,6 +15,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -33,7 +34,7 @@ import androidx.compose.ui.window.Dialog
 import com.nepenthx.zxtimer.R
 
 @Composable
-fun EditDialog(onDismissRequest: () -> Unit,
+fun EditDialog(showText:String,onDismissRequest: () -> Unit,
 callBackValue:(String)->Unit)
 {
     val str = remember {
@@ -49,12 +50,16 @@ callBackValue:(String)->Unit)
                 .height(300.dp)
                 .padding(16.dp),
             shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White
+
+            )
 
         ) {
             Box(modifier = Modifier.padding(start = 20.dp,end=20.dp),contentAlignment = Alignment.Center)
             {
                 Column {
-                    TextField{inputValue->  str.value=inputValue }
+                    TextField(showText){inputValue->  str.value=inputValue }
                     Spacer(modifier = Modifier.height(6.dp))
                     ButtonUI(giveBackString = { callBackValue(str.value) })
                 }
@@ -64,13 +69,13 @@ callBackValue:(String)->Unit)
 }
 
 @Composable
-fun TextField(callBackValue: (String) -> Unit) {
+fun TextField(showText: String,callBackValue: (String) -> Unit) {
     val textValue = remember { mutableStateOf("") }
 
     val primaryColor = colorResource(id = R.color.teal_200)
 
     OutlinedTextField(
-        label = { Text(text = "点击输入任务名称～") },
+        label = { Text(text = showText) },
         colors = OutlinedTextFieldDefaults.colors(
             cursorColor = primaryColor,
             focusedBorderColor = primaryColor,
@@ -98,6 +103,8 @@ fun ButtonUI(giveBackString: () -> Unit )
                 onClick = { giveBackString()},
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF9A82C4),
+                    //containerColor = Color(0xFF298FA3),
                     contentColor = Color.White
                 )
             ) {

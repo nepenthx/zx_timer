@@ -8,7 +8,7 @@ import android.widget.Toast
 /**
  * 后端数据库和前端数据库是一样的才方便同步吧
  */
-class databaseOncreate (val context: Context, name: String, version: Int): SQLiteOpenHelper(context,name,null,version) {
+class databaseOncreate (private val context: Context, name: String, version: Int): SQLiteOpenHelper(context,name,null,version) {
 
 
     private val createTasks = "CREATE TABLE tasks (" +

@@ -68,4 +68,6 @@ dependencies {
     coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation libs.androidx.navigation.compose
     implementation 'com.github.commandiron:WheelPickerCompose:1.1.11'
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
 }
