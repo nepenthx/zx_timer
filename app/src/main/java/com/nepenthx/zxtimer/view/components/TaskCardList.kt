@@ -55,7 +55,7 @@ fun TaskCardList(viewModel: UiViewModel){
     ){
         items(viewModel.taskData.value.size){index->
             val taskData=viewModel.taskData.value[index]
-            TaskCard(
+            TaskCardPlus(
                 taskName = taskData.taskName,
                 cycle = taskData.cycle,
                 advanceCompletionBoolean = taskData.advanceCompletionBoolean,

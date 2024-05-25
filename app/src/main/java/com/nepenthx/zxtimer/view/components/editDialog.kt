@@ -17,6 +17,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -34,12 +35,8 @@ import androidx.compose.ui.window.Dialog
 import com.nepenthx.zxtimer.R
 
 @Composable
-fun EditDialog(showText:String,onDismissRequest: () -> Unit,
-callBackValue:(String)->Unit)
-{
-    val str = remember {
-        mutableStateOf(" ")
-    }
+fun RemarkDialog(remark:String,onDismissRequest: () -> Unit){
+
 
     Dialog(
         onDismissRequest = { onDismissRequest() }
@@ -54,35 +51,32 @@ callBackValue:(String)->Unit)
                 containerColor = Color.White
 
             )
-
         ) {
-            Box(modifier = Modifier.padding(start = 20.dp,end=20.dp),contentAlignment = Alignment.Center)
-            {
-                Column {
-                    TextField(showText){inputValue->  str.value=inputValue }
-                    Spacer(modifier = Modifier.height(6.dp))
-                    ButtonUI(giveBackString = { callBackValue(str.value) })
-                }
-            }
+            Text(
+                text = remark,
+                color = Color(0xFF3C6AAA),
+                style = MaterialTheme.typography.bodyMedium
+            )
+
         }
     }
 }
 
 @Composable
-fun TextField(showText: String,callBackValue: (String) -> Unit) {
+fun TextField(modifier: Modifier,showText: String,callBackValue: (String) -> Unit) {
     val textValue = remember { mutableStateOf("") }
 
     val primaryColor = colorResource(id = R.color.teal_200)
 
     OutlinedTextField(
+        modifier = modifier,
         label = { Text(text = showText) },
         colors = OutlinedTextFieldDefaults.colors(
             cursorColor = primaryColor,
             focusedBorderColor = primaryColor,
             focusedLabelColor = primaryColor,
+            unfocusedBorderColor = Color(0xF74ACAA9)
         ),
-        keyboardOptions = KeyboardOptions.Default.copy(keyboardType
-        = KeyboardType.Email),
         value = textValue.value,
         onValueChange = {
             textValue.value = it

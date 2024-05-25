@@ -55,10 +55,9 @@ import java.time.LocalDate
 @Composable
 fun TaskDialogView(viewModel: UiViewModel,onDismissRequest: () -> Unit)
 {
-    val isShowed= remember { mutableStateOf(false) }
-    val showRemark= remember { mutableStateOf(false) }
-    val str= remember { mutableStateOf("点击此处输入待办名称：") }
-    val remark= remember { mutableStateOf("点此添加备注") }
+
+    val str= remember { mutableStateOf("新任务") }
+    val remark= remember { mutableStateOf("") }
     var time by remember { mutableIntStateOf(0) }
     val advanceCompletionBoolean=remember{ mutableStateOf(true) }
     val context = LocalContext.current
@@ -73,6 +72,9 @@ fun TaskDialogView(viewModel: UiViewModel,onDismissRequest: () -> Unit)
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineMedium
         )
+        Spacer(modifier = Modifier.height(6.dp))
+
+        /*
         if(isShowed.value)
         {
 
@@ -81,7 +83,7 @@ fun TaskDialogView(viewModel: UiViewModel,onDismissRequest: () -> Unit)
                 isShowed.value=false
                 })
         }
-        Spacer(modifier = Modifier.height(6.dp))
+
         //这里是新任务的名称
         Box(modifier = Modifier
             .height(30.dp)
@@ -100,6 +102,16 @@ fun TaskDialogView(viewModel: UiViewModel,onDismissRequest: () -> Unit)
                     .wrapContentSize(Alignment.Center),
                 textAlign = TextAlign.Center,
             )
+        }
+
+         */
+
+        TextField(modifier=Modifier
+            .height(70.dp)
+            .padding(6.dp),
+            showText="待办名称",
+            ){
+            inputValue-> str.value=inputValue
         }
 
         Spacer(modifier = Modifier.height(6.dp))
@@ -167,6 +179,7 @@ fun TaskDialogView(viewModel: UiViewModel,onDismissRequest: () -> Unit)
                 }
             }
         }
+        /*
         if(showRemark.value)
         {
             EditDialog("点击添加备注",onDismissRequest = {showRemark.value=false},
@@ -193,6 +206,15 @@ fun TaskDialogView(viewModel: UiViewModel,onDismissRequest: () -> Unit)
                     .wrapContentSize(Alignment.Center),
                 textAlign = TextAlign.Center,
             )
+        }
+
+         */
+        TextField(modifier=Modifier
+            .height(90.dp)
+            .padding(start = 16.dp, end = 16.dp),
+            showText="请输入${str.value}的备注：",
+        ){
+                inputValue-> remark.value=inputValue
         }
 ButtonUI {
 if(str.value!="" && str.value!="点击此处输入待办名称：")
