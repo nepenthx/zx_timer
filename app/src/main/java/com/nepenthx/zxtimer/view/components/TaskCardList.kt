@@ -1,6 +1,7 @@
 package com.nepenthx.zxtimer.view.components
 
 
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -19,6 +20,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.nepenthx.zxtimer.ViewModel.UiViewModel
 import com.nepenthx.zxtimer.data.TaskData
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import kotlin.math.exp
 
 /*
@@ -56,6 +59,7 @@ fun TaskCardList(viewModel: UiViewModel){
         items(viewModel.taskData.value.size){index->
             val taskData=viewModel.taskData.value[index]
             TaskCardPlus(
+                index,
                 taskName = taskData.taskName,
                 cycle = taskData.cycle,
                 advanceCompletionBoolean = taskData.advanceCompletionBoolean,
@@ -63,6 +67,7 @@ fun TaskCardList(viewModel: UiViewModel){
                 remarks = taskData.remarks,
                 // 如果你的 TaskCard 组件接受颜色参数，你可以在这里传递颜色值
                 color = emergencyDegreeColor(taskData.emergencyDegree),
+                startTime = getStartTime(taskData.startTime,taskData.expectedTime),
                 elapsedDuration = getRightTime(taskData.advanceCompletionTime),
             )
         }
@@ -71,6 +76,17 @@ fun TaskCardList(viewModel: UiViewModel){
 
 }
 
+fun getStartTime(startTime: String, expectedTime: Int): String {
+    val formatter = DateTimeFormatter.ofPattern("HH:mm")
+    val initialTime = LocalTime.parse(startTime, formatter)
+
+    val newTime = initialTime.plusMinutes(expectedTime.toLong())
+    val formattedNewTime = newTime.format(formatter)
+
+    val result = "$startTime — $formattedNewTime"
+    println(result)
+    return result
+}
 fun getRightTime( expectedDuration:Int):String
 {
     var result=""

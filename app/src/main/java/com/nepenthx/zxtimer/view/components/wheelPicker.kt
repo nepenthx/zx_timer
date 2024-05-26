@@ -34,8 +34,8 @@ fun WheelPicker(onTimeChanged: (time:LocalTime) -> Unit)
             23, 59
         ),
         //timeFormat = TimeFormat.AM_PM,
-        size = DpSize(200.dp, 100.dp),
-        rowCount = 5,
+        size = DpSize(150.dp, 80.dp),
+        rowCount = 3,
         textStyle = MaterialTheme.typography.titleSmall,
         textColor = Color(R.color.black),
         selectorProperties = WheelPickerDefaults.selectorProperties(

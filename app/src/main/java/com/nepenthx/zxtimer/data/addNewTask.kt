@@ -18,7 +18,7 @@ import java.time.LocalDate
  *             "emergencyDegree INTEGER," +
  *             "remarks TEXT)";
  */
-fun addNewTask(context: Context, taskName:String, createDate:LocalDate, cycle:Boolean, endTime:LocalDate, exceptedTime:Int, advanceCompletionBoolean:Boolean, emergencyDegree:Int, remarks:String)
+fun addNewTask(context: Context, taskName:String, createDate:LocalDate, startTime:String,cycle:Boolean, endTime:LocalDate, exceptedTime:Int, advanceCompletionBoolean:Boolean, emergencyDegree:Int, remarks:String)
 {
     val dbHelper = databaseOncreate(context, "createTasks.db", 1)
     val db=dbHelper.writableDatabase
@@ -27,6 +27,7 @@ fun addNewTask(context: Context, taskName:String, createDate:LocalDate, cycle:Bo
         put("createDate",createDate.toString())
         put("cycle", if (cycle) 1 else 0)
         put("endTime", endTime.toString())
+        put("startTime",startTime)
         put("expectedTime", exceptedTime)
         put("advanceCompletionBoolean", if (advanceCompletionBoolean) 1 else 0)
         // 设置其他字段的值

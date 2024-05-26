@@ -15,6 +15,7 @@ class databaseOncreate (private val context: Context, name: String, version: Int
             "id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "taskName TEXT," +
             "createdate DATETIME," +
+            "startTime TEXT," +
             "cycle INTEGER," +
             "endTime DATETIME," +
             "expectedTime INTEGER," +

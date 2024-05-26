@@ -52,6 +52,7 @@ import com.nepenthx.zxtimer.data.selectTaskData
 import com.nepenthx.zxtimer.view.components.MonthView
 import com.nepenthx.zxtimer.view.components.TaskCardList
 import com.nepenthx.zxtimer.view.components.TaskDialog
+import com.nepenthx.zxtimer.view.components.TimerTest
 import com.nepenthx.zxtimer.view.components.WheelPicker
 import com.nepenthx.zxtimer.view.ui.MonthViewOfTasks
 import com.nepenthx.zxtimer.view.ui.ddlView
@@ -70,12 +71,14 @@ fun BottomNavGraph(
             MonthViewOfTasks(viewModel)
         }
         composable(route = BottomBarScreen.Report.route) {
+            TimerTest()
         }
         composable(route = BottomBarScreen.Profile.route) {
 
         }
     }
 }
+
 @Composable
 fun BottomNav(viewModel: UiViewModel) {
     val navController = rememberNavController()

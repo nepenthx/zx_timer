@@ -33,11 +33,12 @@ fun selectTaskData(context: Context, createdate:String):MutableList<TaskData>{
                 val createDate = cursor.getString(cursor.getColumnIndex("createdate"))
                 val cycle=cursor.getInt(cursor.getColumnIndex("cycle"))
                 val expectedTime = cursor.getInt(cursor.getColumnIndex("expectedTime"))
+                val startTime=cursor.getString(cursor.getColumnIndex("startTime"))
                 val advanceCompletionBoolean = cursor.getInt(cursor.getColumnIndex("advanceCompletionBoolean"))
                 val advanceCompletionTime = cursor.getInt(cursor.getColumnIndex("advanceCompletionTime"))
                 val remarks = cursor.getString(cursor.getColumnIndex("remarks"))
                 val emergencyDegree = cursor.getInt(cursor.getColumnIndex("emergencyDegree"))
-                val taskFrame=TaskData(taskName, createDate, cycle, expectedTime, advanceCompletionBoolean, advanceCompletionTime, remarks, emergencyDegree)
+                val taskFrame=TaskData(taskName, createDate, startTime,cycle, expectedTime, advanceCompletionBoolean, advanceCompletionTime, remarks, emergencyDegree)
                 mutableTask.add(taskFrame)
 
             } while (cursor.moveToNext())

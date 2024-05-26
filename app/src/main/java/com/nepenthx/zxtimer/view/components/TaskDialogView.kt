@@ -38,6 +38,7 @@ import com.nepenthx.zxtimer.ViewModel.UiViewModel
 import com.nepenthx.zxtimer.data.addNewTask
 import com.nepenthx.zxtimer.data.selectTaskData
 import java.time.LocalDate
+import java.time.LocalTime
 
 /**
  * fun addNewTask(
@@ -59,6 +60,7 @@ fun TaskDialogView(viewModel: UiViewModel,onDismissRequest: () -> Unit)
     val str= remember { mutableStateOf("新任务") }
     val remark= remember { mutableStateOf("") }
     var time by remember { mutableIntStateOf(0) }
+    var startTime by remember{ mutableStateOf(LocalTime.MIN)}
     val advanceCompletionBoolean=remember{ mutableStateOf(true) }
     val context = LocalContext.current
 
@@ -106,7 +108,7 @@ fun TaskDialogView(viewModel: UiViewModel,onDismissRequest: () -> Unit)
 
          */
 
-        TextField(modifier=Modifier
+        TextField(modifier= Modifier
             .height(70.dp)
             .padding(6.dp),
             showText="待办名称",
@@ -116,26 +118,61 @@ fun TaskDialogView(viewModel: UiViewModel,onDismissRequest: () -> Unit)
 
         Spacer(modifier = Modifier.height(6.dp))
 
-        Text(
-            text = "预期完成时间：",
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentSize(Alignment.Center),
-            textAlign = TextAlign.Center,
-        )
+        Row (modifier=Modifier.fillMaxWidth()){
+            Box(modifier = Modifier
+                .weight(1f)
+                .padding(6.dp)
+            ){
+                Column {
+                    Text(
+                        text = "开始时间：",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentSize(Alignment.Center),
+                        textAlign = TextAlign.Center,
+                    )
+                    Spacer(modifier = Modifier.height(6.dp))
 
-        Spacer(modifier = Modifier.height(6.dp))
+                    Box(modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentSize(Alignment.Center),
+                    )
+                    {
+                        WheelPicker{
+                                selectTime->
+                            startTime=selectTime
+                        }
+                    }
+                }
+            }
+            Box(modifier = Modifier
+                .weight(1f)
+                .padding(6.dp)
+            ) {
+                Column {
+                    Text(
+                        text = "预期耗时：",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentSize(Alignment.Center),
+                        textAlign = TextAlign.Center,
+                    )
+                    Spacer(modifier = Modifier.height(6.dp))
 
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentSize(Alignment.Center),
-        )
-        {
-            WheelPicker{
-                   selectTime->
-                time=60*selectTime.hour+selectTime.minute
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentSize(Alignment.Center),
+                    )
+                    {
+                        WheelPicker { selectTime ->
+                            time = 60 * selectTime.hour + selectTime.minute
+                        }
+                    }
+                }
             }
         }
+
         Spacer(modifier = Modifier.height(6.dp))
 
         Box(
@@ -146,7 +183,6 @@ fun TaskDialogView(viewModel: UiViewModel,onDismissRequest: () -> Unit)
             Row(Modifier.fillMaxWidth()) {
                 Box(
                     modifier = Modifier
-
                         .weight(1f)
                         .padding(horizontal = 8.dp)
                         .background(
@@ -209,7 +245,7 @@ fun TaskDialogView(viewModel: UiViewModel,onDismissRequest: () -> Unit)
         }
 
          */
-        TextField(modifier=Modifier
+        TextField(modifier= Modifier
             .height(90.dp)
             .padding(start = 16.dp, end = 16.dp),
             showText="请输入${str.value}的备注：",
@@ -220,7 +256,7 @@ ButtonUI {
 if(str.value!="" && str.value!="点击此处输入待办名称：")
 {
     Log.d("Insert date","${str.value}success")
-    addNewTask(context,str.value, viewModel.selectDate.value,true, LocalDate.now(),time,advanceCompletionBoolean.value,4,remark.value)
+    addNewTask(context,str.value, viewModel.selectDate.value,startTime.toString() ,true, LocalDate.now(),time,advanceCompletionBoolean.value,4,remark.value)
     //viewModel.taskData.value= selectTaskData(context,viewModel.selectDate.value.toString())
     viewModel.fetchTasks(context)
 }

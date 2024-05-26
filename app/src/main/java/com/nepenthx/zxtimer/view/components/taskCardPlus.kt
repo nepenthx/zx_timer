@@ -14,6 +14,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.with
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -63,10 +64,12 @@ import com.nepenthx.zxtimer.R
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun TaskCardPlus(
+    number:Int,
     cycle:Int,//是否完成
     advanceCompletionBoolean:Int,//是否正计时
     taskName: String,
     color: Color,
+    startTime:String,
     expectedDuration: String,
     elapsedDuration: String,
     remarks:String
@@ -86,18 +89,29 @@ fun TaskCardPlus(
                 .clickable { visible = !visible },
             shape = RoundedCornerShape(16.dp),
         ) {
-            Box(Modifier.fillMaxSize().padding(16.dp), contentAlignment = Alignment.Center)
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .padding(16.dp), contentAlignment = Alignment.Center)
             {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
                     Box(
+                        contentAlignment = Alignment.Center,
                         modifier = Modifier
                             .size(24.dp)
-                            .background(color, CircleShape)
+                            .border(1.dp,color, CircleShape)
 
+                            //.background(color, CircleShape)
                     )
+                    {
+                        Text(
+                            text = number.toString(),
+                            color=color
+                        )
+                    }
 
                     Spacer(modifier = Modifier.width(16.dp))
 
@@ -106,15 +120,27 @@ fun TaskCardPlus(
                         color = Color(0xFF413A3A),
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.weight(1f)
-
                     )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Box(modifier=Modifier.height(24.dp)){
+                        Row (verticalAlignment = Alignment.CenterVertically){
 
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Expand Icon",
-                        tint = Color(0xFF413A3A),
-                        modifier = Modifier.size(24.dp)
-                    )
+                            Text(
+                                text = startTime,
+                                color = Color(0xFF413A3A),
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.height(24.dp),
+                                )
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = "Expand Icon",
+                                tint = Color(0xFF413A3A),
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    }
+
                 }
             }
         }
@@ -330,10 +356,12 @@ fun ExpandedRemarkView(remark:String)
 @Composable
 fun TaskCardPlusExample() {
     TaskCardPlus(
+        1,
         cycle=1,
         advanceCompletionBoolean=1,
         taskName = "写作业",
         color = Color.Magenta,
+        startTime = "10:00-12:00",
         expectedDuration = "2 hours",
         elapsedDuration = "1 hour 30 minutes",
         remarks="这段代码实现了一个可扩展的表面（Surface），点击表面时可以展开或收缩内容。让我逐步解释代码的功能：\n" +
